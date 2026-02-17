@@ -42,4 +42,20 @@ export class UserModel {
       });
     });
   }
+
+  static async update(id: number, updates: Partial<User>): Promise<void> {
+    const keys = Object.keys(updates).filter(k => k !== 'id' && k !== 'created_at' && k !== 'role');
+    if (keys.length === 0) return;
+
+    return new Promise((resolve, reject) => {
+      const setClause = keys.map(k => `${k} = ?`).join(', ');
+      const values = keys.map(k => (updates as any)[k]);
+      values.push(id);
+      
+      db.run(`UPDATE users SET ${setClause} WHERE id = ?`, values, (err) => {
+        if (err) reject(err);
+        else resolve();
+      });
+    });
+  }
 }

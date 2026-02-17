@@ -120,4 +120,75 @@ export class AuthController {
       res.status(500).json({ error: 'Failed to get user info' });
     }
   }
+
+  static async updateProfile(req: AuthRequest, res: Response) {
+    try {
+      if (!req.user) {
+        return res.status(401).json({ error: 'Not authenticated' });
+      }
+
+      const { full_name, email, password, current_password } = req.body;
+      const updates: any = {};
+
+      if (full_name) updates.full_name = full_name;
+
+      if (email && email !== req.user.email) {
+        const existingUser = await UserModel.findByEmail(email);
+        if (existingUser && existingUser.id !== req.user.id) {
+          return res.status(400).json({ error: 'Email already exists' });
+        }
+        updates.email = email;
+      }
+
+      if (password) {
+        if (!current_password) {
+          return res.status(400).json({ error: 'Current password is required to set a new password' });
+        }
+        
+        const user = await UserModel.findById(req.user.id);
+        if (!user) {
+          return res.status(404).json({ error: 'User not found' });
+        }
+
+        const isValidPassword = await bcrypt.compare(current_password, user.password_hash);
+        if (!isValidPassword) {
+          return res.status(400).json({ error: 'Incorrect current password' });
+        }
+
+        updates.password_hash = await bcrypt.hash(password, authConfig.bcryptRounds);
+      }
+
+      if (Object.keys(updates).length > 0) {
+        await UserModel.update(req.user.id, updates);
+      }
+
+      // Re-fetch user to get updated fields
+      const updatedUser = await UserModel.findById(req.user.id);
+      if (!updatedUser) {
+        return res.status(404).json({ error: 'User not found' });
+      }
+
+      // Generate new token with potential new email
+      const token = jwt.sign(
+        { id: updatedUser.id, email: updatedUser.email, role: updatedUser.role },
+        authConfig.jwtSecret,
+        { expiresIn: authConfig.jwtExpiresIn as any }
+      );
+
+      res.json({
+        message: 'Profile updated successfully',
+        token,
+        user: {
+          id: updatedUser.id,
+          email: updatedUser.email,
+          full_name: updatedUser.full_name,
+          role: updatedUser.role,
+          created_at: updatedUser.created_at,
+        },
+      });
+    } catch (error) {
+      console.error('Update profile error:', error);
+      res.status(500).json({ error: 'Failed to update profile' });
+    }
+  }
 }
