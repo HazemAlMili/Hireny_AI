@@ -1,234 +1,134 @@
-# Job Board AI
+# Job Board AI: Next-Gen Edition ✨
 
-An AI-powered job board with automated resume evaluation using OpenAI GPT-4o-mini.
+An AI-powered job board with automated resume evaluation using **Gemini 2.5 Flash**, now refactored with a premium **Next-Gen UI** featuring Glassmorphism, Bento Grid layouts, and cinematic animations.
 
 ## 🚀 Quick Start
 
 ### Prerequisites
 - Node.js 18+
 - npm or yarn
-- OpenAI API Key
+- Gemini API Key ([Get one here](https://makersuite.google.com/app/apikey))
 
 ### Backend Setup
-
 ```bash
 cd backend
 npm install
 cp .env.example .env
-# Edit .env and add your OPENAI_API_KEY
+# Edit .env and add your GEMINI_API_KEY
 npm run seed
 npm run dev
 ```
-
 Backend runs at: http://localhost:5001
 
 ### Frontend Setup
-
 ```bash
 cd frontend
 npm install
 npm run dev
 ```
+Frontend runs at: http://localhost:5174 (or 5173)
 
-Frontend runs at: http://localhost:5173
+## 🎨 Next-Gen UI Features
+
+The application has been completely refactored with the **Aura Design System**:
+
+- **Bento Grid Layout**: Dynamic and responsive grid system for HR Dashboard and Job Listings.
+- **Glassmorphism**: Premium "frosted glass" effects with deep backdrop blurs and semi-transparent surfaces.
+- **Cinematic Animations**: Powered by **Framer Motion**, featuring stagger effects, smooth page transitions, and micro-interactions.
+- **AI Scanning Effect**: Animated laser scanning animation for AI results.
+- **Dynamic Glows**: Interactive glowing borders and shadows that react to user hover.
+- **Tailwind CSS 3.4**: Modern styling with a custom color palette (Violet to Cyan gradients).
+- **Lucide React Icons**: Consistent, high-quality vector icons throughout the app.
 
 ## 📋 Features
 
 ### For Applicants
-- 🔍 Browse active job postings
-- 📝 Submit applications with resume upload
-- 🤖 AI-powered resume evaluation (automatic)
-- 📊 Track application status
-- ⭐ View AI scores and feedback
+- 🔍 **Browse Jobs**: Advanced search and filters with Bento Grid layout.
+- 📝 **Apply**: Submit applications with PDF/Docx resume upload.
+- 🤖 **AI Match Score**: Instant resume evaluation with a match score badge.
+- 📊 **Track Status**: Real-time updates on application progress.
+- ⭐ **AI Feedback**: Detailed feedback from Gemini on how to improve.
 
 ### For HR
-- 📊 Dashboard with statistics
-- 💼 Create and manage job postings
-- 👥 Review all applications
-- 🤖 View AI evaluation scores
-- 📄 Download applicant resumes
-- ✅ Accept/reject applications
+- 📊 **Bento Dashboard**: Interactive statistics with glassmorphism cards.
+- 💼 **Job Management**: Create, edit, and manage job postings.
+- 👥 **Candidate Review**: Staggered list of applications with AI scores.
+- 📄 **Resume Preview**: One-click download of applicant resumes.
+- ✅ **Quick Actions**: Accept or reject applications with glass buttons.
 
-## 🎨 Tech Stack
-
-### Backend
-- Node.js + Express 5
-- TypeScript
-- SQLite Database
-- OpenAI SDK (GPT-4o-mini)
-- JWT Authentication
-- Multer for file uploads
+## 🛠️ Tech Stack
 
 ### Frontend
-- React 19 + TypeScript
-- Vite
-- React Router DOM
-- Axios for API calls
-- Modern CSS with Glassmorphism
-- Responsive Design
+- **Framework**: React 18 + TypeScript
+- **Styling**: Tailwind CSS + Custom Aura Design System
+- **Animations**: Framer Motion
+- **Icons**: Lucide React
+- **Build Tool**: Vite
+
+### Backend
+- **Runtime**: Node.js + Express 5
+- **Language**: TypeScript
+- **Database**: SQLite (Production-ready for Vercel)
+- **AI Engine**: Google Gemini 2.5 Flash
+- **Auth**: JWT + Bcrypt
 
 ## 🔐 Demo Credentials
 
-### HR User
-- Email: `hr@jobboard.com`
-- Password: `12345678`
-
-### Applicant
-- Email: `john.doe@example.com`
-- Password: `password123`
-
-Or register a new applicant account!
-
-## 📱 Application Flow
-
-### Applicant Journey
-1. Browse jobs (public)
-2. Register/Login
-3. Apply with resume upload
-4. AI evaluates resume automatically
-5. Track application status
-6. View AI feedback and scores
-
-### HR Journey
-1. Login (HR accounts are pre-seeded)
-2. View dashboard statistics
-3. Create/manage job postings
-4. Review applications with AI scores
-5. Download resumes
-6. Accept or reject candidates
-
-## 🎯 AI Evaluation
-
-When an applicant submits a resume:
-1. File is uploaded to the backend
-2. Sent to OpenAI for analysis
-3. AI generates a score (1-10) and detailed feedback
-4. Score < 5: Automatically rejected
-5. Score ≥ 5: Moved to HR review
-6. HR makes final decision
+| Role | Email | Password |
+|------|-------|----------|
+| **HR Manager** | `hr@jobboard.com` | `12345678` |
+| **Applicant** | `john.doe@example.com` | `password123` |
 
 ## 🏗️ Project Structure
 
 ```
 job-board-ai/
+├── frontend/             # Next-Gen React UI
+│   ├── src/
+│   │   ├── components/
+│   │   │   ├── ui/       # GlassCard, Bento components
+│   │   │   ├── GeminiFeedback.tsx
+│   │   │   └── LoadingAI.tsx
+│   │   ├── pages/        # Applicant & HR pages
+│   │   └── lib/          # Tailwind utilities (cn utility)
+│   ├── tailwind.config.js
+│   └── postcss.config.js
 ├── backend/              # Express + TypeScript API
 │   ├── src/
-│   │   ├── config/       # Database, OpenAI config
-│   │   ├── controllers/  # Request handlers
-│   │   ├── middleware/   # Auth, file upload, roles
-│   │   ├── models/       # Data models
-│   │   ├── routes/       # API routes
-│   │   ├── services/     # OpenAI integration
-│   │   └── types/        # TypeScript types
+│   │   ├── config/       # Gemini & DB configuration
+│   │   ├── controllers/  # Auth & Job logic
+│   │   └── models/       # SQLite schemas
 │   └── uploads/          # Resume storage
-│
-└── frontend/             # React + Vite
-    ├── src/
-    │   ├── components/   # Reusable UI components
-    │   ├── context/      # Auth state management
-    │   ├── pages/        # All application pages
-    │   │   ├── applicant/
-    │   │   └── hr/
-    │   ├── services/     # API integration
-    │   ├── styles/       # CSS files
-    │   └── types/        # TypeScript types
-    └── public/           # Static assets
+├── vercel.json           # Monorepo deployment config
+└── ...
 ```
-
-## 📚 API Endpoints
-
-### Authentication
-- `POST /api/auth/register` - Register applicant
-- `POST /api/auth/login` - Login
-- `GET /api/auth/me` - Get current user
-
-### Jobs (Public)
-- `GET /api/jobs` - List active jobs
-- `GET /api/jobs/:id` - Get job details
-
-### Jobs (HR Only)
-- `POST /api/jobs` - Create job
-- `PUT /api/jobs/:id` - Update job
-- `DELETE /api/jobs/:id` - Delete job
-
-### Applications
-- `POST /api/applications` - Submit application
-- `GET /api/applications/my-applications` - View own applications
-- `GET /api/applications/:id` - View application details
-
-### HR Dashboard
-- `GET /api/hr/applications` - List all applications
-- `GET /api/hr/applications/:id` - Get application details
-- `PUT /api/hr/applications/:id/status` - Update status
-- `GET /api/hr/stats` - Dashboard statistics
-
-## 🎨 Design Features
-
-- **Dark Theme**: Modern, professional dark interface
-- **Glassmorphism**: Frosted glass effects on cards
-- **Vibrant Gradients**: Eye-catching color schemes
-- **Smooth Animations**: Professional micro-interactions
-- **Responsive Design**: Works on all devices
-- **Premium Typography**: Inter font family
-
-## 🔒 Security
-
-- JWT token authentication
-- Password hashing with bcrypt
-- Role-based access control
-- File upload validation
-- Protected API routes
-- XSS protection
 
 ## 🚀 Deployment
 
-### Backend
-```bash
-cd backend
-npm run build
-npm start
-```
+The project is optimized for deployment on **Vercel**.
 
-### Frontend
-```bash
-cd frontend
-npm run build
-npm run preview
-```
+1. **GitHub**: Push your code to a GitHub repository.
+2. **Import**: Import the repo into Vercel.
+3. **Env Vars**: Add `JWT_SECRET` and `GEMINI_API_KEY`.
+4. **Deploy**: Vercel will automatically handle the monorepo build using the provided `vercel.json`.
 
-## 📝 Environment Variables
+For detailed instructions, see:
+- 📖 [QUICK-START.md](./QUICK-START.md)
+- 📋 [DEPLOYMENT-CHECKLIST.md](./DEPLOYMENT-CHECKLIST.md)
+- 🌐 [VERCEL-DEPLOYMENT.md](./VERCEL-DEPLOYMENT.md)
 
-### Backend (.env)
-```env
-PORT=5001
-JWT_SECRET=your-secret-key
-OPENAI_API_KEY=your-openai-key
-OPENAI_MODEL=gpt-4o-mini
-DATABASE_PATH=./database.sqlite
-UPLOAD_DIR=./uploads
-AI_SCORE_THRESHOLD=5
-FRONTEND_URL=http://localhost:5173
-```
+## 🎯 AI Evaluation Logic
 
-### Frontend (.env)
-```env
-VITE_API_URL=http://localhost:5001
-```
-
-## 🤝 Contributing
-
-This is a demo project showcasing AI integration with a job board application.
+When an applicant submits a resume:
+1. Physical file is handled by **Multer**.
+2. Text is extracted from PDF/Docx.
+3. Sent to **Gemini AI** with a custom system prompt.
+4. AI generates a **Match Score (1-10)** and feedback.
+5. Applicants with **Score < 5** are automatically filtered for HR efficiency.
 
 ## 📄 License
-
 MIT
 
-## 🎉 Acknowledgments
-
-- OpenAI for GPT-4o-mini
-- React team for the amazing framework
-- Vite for blazing-fast development
-
 ---
+Built with ❤️ using React, Tailwind, and Gemini
 
-Built with ❤️ using React, Node.js, and AI
