@@ -19,9 +19,13 @@ export const authService = {
       password: credentials.password,
     });
 
-    if (error) throw error;
+    if (error) {
+      console.error("Login attempt failed:", error.message);
+      throw error;
+    }
     
     const user = mapSupabaseUser(data.user);
+
     // Mimic the old response structure
     return { user, token: data.session?.access_token };
   },

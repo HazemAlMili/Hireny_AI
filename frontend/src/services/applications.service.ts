@@ -15,7 +15,10 @@ export const applicationsService = {
       .from('resumes')
       .upload(filePath, applicationData.resume);
 
-    if (uploadError) throw uploadError;
+    if (uploadError) {
+      console.error("Resume upload failed:", uploadError.message);
+      throw uploadError;
+    }
 
     // Get public URL
     const { data: publicUrlData } = supabase.storage
@@ -37,7 +40,10 @@ export const applicationsService = {
       .select()
       .single();
 
-    if (error) throw error;
+    if (error) {
+      console.error("Application record insertion failed:", error.message);
+      throw error;
+    }
     return data;
   },
 
@@ -51,9 +57,13 @@ export const applicationsService = {
       .select('*, job:jobs(title, location)') // Join with jobs
       .eq('applicant_id', user.id);
 
-    if (error) throw error;
+    if (error) {
+      console.error("Failed to fetch applications:", error.message);
+      throw error;
+    }
     return data || [];
   },
+
 
   // Get single application
   getApplication: async (id: number): Promise<Application> => {
