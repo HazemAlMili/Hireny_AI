@@ -24,7 +24,7 @@ const ManageJobs: React.FC = () => {
     try {
       const data = await jobsService.getAllJobs();
       setJobs(data);
-    } catch (err: any) {
+    } catch {
       setError('Failed to load jobs.');
     } finally {
       setLoading(false);
@@ -44,7 +44,7 @@ const ManageJobs: React.FC = () => {
       setJobs(jobs.filter(job => job.id !== jobToDelete));
       setDeleteModalOpen(false);
       setJobToDelete(null);
-    } catch (err: any) {
+    } catch {
       setError('Failed to delete job. It may have active dependencies.');
       setDeleteModalOpen(false);
     }

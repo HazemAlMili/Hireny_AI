@@ -10,6 +10,7 @@ interface AuthContextType {
   isLoading: boolean;
   login: (email: string, password: string) => Promise<User>;
   register: (full_name: string, email: string, password: string) => Promise<void>;
+  updateUser: (user: User) => void;
   logout: () => void;
   isHR: () => boolean;
 }
@@ -28,7 +29,7 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
         try {
           const currentUser = await authService.getCurrentUser();
           setUser(currentUser);
-        } catch (error) {
+        } catch {
           // Token invalid, clear it
           authService.logout();
         }
@@ -55,9 +56,13 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
     setUser(null);
   };
 
-  const isHR = () => {
-    return user?.role === 'hr';
+  const updateUser = (updatedUser: User) => {
+    setUser(updatedUser);
   };
+
+  const isHR = React.useCallback(() => {
+    return user?.role === 'hr';
+  }, [user]);
 
   return (
     <AuthContext.Provider
@@ -67,6 +72,7 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
         isLoading,
         login,
         register,
+        updateUser,
         logout,
         isHR,
       }}
@@ -76,6 +82,7 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
   );
 };
 
+// eslint-disable-next-line react-refresh/only-export-components
 export const useAuth = () => {
   const context = useContext(AuthContext);
   if (!context) {

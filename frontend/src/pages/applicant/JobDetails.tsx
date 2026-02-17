@@ -22,13 +22,13 @@ const JobDetails: React.FC = () => {
         checkApplicationStatus(parseInt(id));
       }
     }
-  }, [id, user]);
+  }, [id, user, isHR]);
 
   const loadJob = async (jobId: number) => {
     try {
       const data = await jobsService.getJob(jobId);
       setJob(data);
-    } catch (err: any) {
+    } catch {
       setError('Failed to load job details.');
     } finally {
       setLoading(false);

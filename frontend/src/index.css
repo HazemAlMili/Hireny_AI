@@ -1,6 +1,10 @@
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap');
 @import './styles/components.css';
 
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
 
 :root {
   /* Colors - Vibrant and modern palette */
@@ -49,6 +53,15 @@
 
   /* Transitions */
   --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+@layer utilities {
+  .line-clamp-3 {
+    overflow: hidden;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 3;
+  }
 }
 
 * {
@@ -251,6 +264,7 @@ body {
   display: flex;
   align-items: center;
   gap: 0.5rem;
+  text-decoration: none;
 }
 
 .dropdown-item:hover {
@@ -326,7 +340,8 @@ body {
 .btn-link,
 .btn-download,
 .btn-edit,
-.btn-delete {
+.btn-delete,
+.btn-danger {
   padding: 0.75rem 1.5rem;
   border-radius: var(--radius-lg);
   font-weight: 600;

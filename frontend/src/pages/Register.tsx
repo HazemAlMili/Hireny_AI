@@ -32,8 +32,9 @@ const Register: React.FC = () => {
     try {
       await register(fullName, email, password);
       navigate('/jobs');
-    } catch (err: any) {
-      setError(err.response?.data?.error || 'Registration failed. Please try again.');
+    } catch (err) {
+      const error = err as { response?: { data?: { error?: string } } };
+      setError(error.response?.data?.error || 'Registration failed. Please try again.');
     } finally {
       setLoading(false);
     }

@@ -31,7 +31,7 @@ const ApplyJob: React.FC = () => {
     try {
       const data = await jobsService.getJob(jobId);
       setJob(data);
-    } catch (err: any) {
+    } catch {
       setError('Failed to load job details.');
     } finally {
       setLoading(false);
@@ -86,8 +86,9 @@ const ApplyJob: React.FC = () => {
       setTimeout(() => {
         navigate('/my-applications');
       }, 2000);
-    } catch (err: any) {
-      setError(err.response?.data?.error || 'Failed to submit application. Please try again.');
+    } catch (err) {
+      const error = err as { response?: { data?: { error?: string } } };
+      setError(error.response?.data?.error || 'Failed to submit application. Please try again.');
     } finally {
       setSubmitting(false);
     }

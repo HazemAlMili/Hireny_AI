@@ -18,7 +18,7 @@ const MyApplications: React.FC = () => {
         const data = await applicationsService.getMyApplications();
         setApplications(data);
         setError('');
-      } catch (err: any) {
+      } catch {
         if (!silent) setError('Failed to load applications.');
       } finally {
         if (!silent) setLoading(false);

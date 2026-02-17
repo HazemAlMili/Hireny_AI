@@ -34,7 +34,7 @@ const CreateEditJob: React.FC = () => {
       setLocation(job.location);
       setSalaryRange(job.salary_range);
       setStatus(job.status);
-    } catch (err: any) {
+    } catch {
       setError('Failed to load job details.');
     } finally {
       setLoading(false);
@@ -68,8 +68,9 @@ const CreateEditJob: React.FC = () => {
         await jobsService.createJob(createData);
       }
       navigate('/hr/jobs');
-    } catch (err: any) {
-      setError(err.response?.data?.error || 'Failed to save job.');
+    } catch (err) {
+      const error = err as { response?: { data?: { error?: string } } };
+      setError(error.response?.data?.error || 'Failed to save job.');
     } finally {
       setSubmitting(false);
     }

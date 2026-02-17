@@ -19,8 +19,9 @@ const Login: React.FC = () => {
       await login(email, password);
       // "when login make it to move me to welcome page first"
       navigate('/');
-    } catch (err: any) {
-      setError(err.response?.data?.error || 'Login failed. Please check your credentials.');
+    } catch (err) {
+      const error = err as { response?: { data?: { error?: string } } };
+      setError(error.response?.data?.error || 'Login failed. Please check your credentials.');
     } finally {
       setLoading(false);
     }

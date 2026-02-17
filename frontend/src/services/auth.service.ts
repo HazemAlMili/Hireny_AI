@@ -57,4 +57,16 @@ export const authService = {
     const user = authService.getStoredUser();
     return user?.role === 'hr';
   },
+
+  // Update profile
+  updateProfile: async (data: { full_name?: string; email?: string; password?: string, current_password?: string }) => {
+    const response = await api.put('/auth/profile', data);
+    if (response.data.token) {
+      sessionStorage.setItem('token', response.data.token);
+    }
+    if (response.data.user) {
+      sessionStorage.setItem('user', JSON.stringify(response.data.user));
+    }
+    return response.data;
+  },
 };

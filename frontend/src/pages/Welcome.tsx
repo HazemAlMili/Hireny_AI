@@ -219,7 +219,7 @@ const Welcome: React.FC = () => {
 
       {/* Footer */}
       <footer className="welcome-footer">
-        <p>&copy; 2026 AI Job Board. Powered by Gemini AI.</p>
+        <p>&copy; 2026 AI Job Board. Powered by Hazem Al-Melli.</p>
       </footer>
     </div>
   );

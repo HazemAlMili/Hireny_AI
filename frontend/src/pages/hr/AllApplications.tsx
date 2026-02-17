@@ -20,7 +20,7 @@ const AllApplications: React.FC = () => {
     try {
       const data = await hrService.getAllApplications();
       setApplications(data);
-    } catch (err: any) {
+    } catch {
       setError('Failed to load applications.');
     } finally {
       setLoading(false);

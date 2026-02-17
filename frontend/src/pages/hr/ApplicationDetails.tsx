@@ -3,7 +3,8 @@ import { useParams, useNavigate } from 'react-router-dom';
 import { hrService } from '../../services/hr.service';
 import type { ApplicationWithJobDetails, Application } from '../../types';
 import StatusBadge from '../../components/StatusBadge';
-import LoadingSpinner from '../../components/LoadingSpinner';
+import LoadingAI from '../../components/LoadingAI';
+import GeminiFeedback from '../../components/GeminiFeedback';
 
 const ApplicationDetails: React.FC = () => {
   const { id } = useParams<{ id: string }>();
@@ -23,7 +24,7 @@ const ApplicationDetails: React.FC = () => {
     try {
       const data = await hrService.getApplicationDetails(appId);
       setApplication(data);
-    } catch (err: any) {
+    } catch {
       setError('Failed to load application details.');
     } finally {
       setLoading(false);
@@ -37,14 +38,14 @@ const ApplicationDetails: React.FC = () => {
     try {
       await hrService.updateApplicationStatus(application.id, newStatus);
       setApplication({ ...application, status: newStatus });
-    } catch (err: any) {
+    } catch {
       alert('Failed to update status.');
     } finally {
       setUpdating(false);
     }
   };
 
-  if (loading) return <LoadingSpinner fullPage message="Loading application..." />;
+  if (loading) return <LoadingAI fullPage message="Loading application..." />;
 
   if (error || !application) {
     return (
@@ -134,32 +135,13 @@ const ApplicationDetails: React.FC = () => {
           </div>
         </div>
 
-        {application.ai_score !== null && (
-          <div className="ai-evaluation-section">
-            <h3>AI Evaluation</h3>
-            <div className="ai-score-display">
-              <div className="score-circle">
-                <span className={`score-number ${application.ai_score >= 7 ? 'high' : application.ai_score >= 5 ? 'medium' : 'low'}`}>
-                  {application.ai_score}
-                </span>
-                <span className="score-total">/10</span>
-              </div>
-              <div className="score-details">
-                <p className="score-label">AI Match Score</p>
-                <p className="score-description">
-                  {application.ai_score >= 7 ? 'Excellent match' : 
-                   application.ai_score >= 5 ? 'Good match' : 'Needs review'}
-                </p>
-              </div>
-            </div>
-            {application.ai_feedback && (
-              <div className="ai-feedback-box">
-                <h4>AI Feedback</h4>
-                <p>{application.ai_feedback}</p>
-              </div>
-            )}
-          </div>
-        )}
+        <div className="mb-6">
+          <GeminiFeedback
+            score={application.ai_score}
+            feedback={application.ai_feedback || 'No feedback available'}
+            isLoading={false}
+          />
+        </div>
 
         <div className="resume-section">
           <h3>Resume</h3>

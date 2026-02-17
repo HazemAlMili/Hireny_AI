@@ -3,6 +3,7 @@ import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
 import { AuthProvider } from './context/AuthContext';
 import ProtectedRoute from './components/ProtectedRoute';
 import Navbar from './components/Navbar';
+import PageTransition from './components/PageTransition';
 
 // Auth pages
 import Login from './pages/Login';
@@ -30,7 +31,8 @@ const App: React.FC = () => {
         <div className="app">
           <Navbar />
           <main className="main-content">
-            <Routes>
+            <PageTransition>
+              <Routes>
               {/* Public routes */}
               <Route path="/login" element={<Login />} />
               <Route path="/register" element={<Register />} />
@@ -117,6 +119,7 @@ const App: React.FC = () => {
               <Route path="/" element={<Welcome />} />
               <Route path="*" element={<Navigate to="/" replace />} />
             </Routes>
+            </PageTransition>
           </main>
         </div>
       </BrowserRouter>
