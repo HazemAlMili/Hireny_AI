@@ -1,0 +1,6 @@
+export declare const authConfig: {
+    jwtSecret: string;
+    jwtExpiresIn: string;
+    bcryptRounds: number;
+};
+//# sourceMappingURL=auth.d.ts.map
