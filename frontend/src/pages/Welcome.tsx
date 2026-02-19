@@ -57,11 +57,6 @@ const Welcome: React.FC = () => {
           
           <div className="hero-stats">
             <div className="stat-item">
-              <div className="stat-number">10K+</div>
-              <div className="stat-label">Active Jobs</div>
-            </div>
-            <div className="stat-divider"></div>
-            <div className="stat-item">
               <div className="stat-number">95%</div>
               <div className="stat-label">Match Accuracy</div>
             </div>
